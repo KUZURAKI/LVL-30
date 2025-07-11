@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ _('title') }}</title>
+    <link rel="stylesheet" href="../static/styles/index.css" />
+  </head>
+  <body>
+    <header>
+      <div class="containerNav">
+        <div class="containerLogo">
+          <img
+            src="{{ url_for('static', filename='img/eye.png') }}"
+            alt="Toggle"
+          />
+        </div>
+        <div class="containerButton">
+          <button class="openModalBtn">{{ _('submit_button') }}</button>
+          <hr class="upHr" />
+          <button class="themeSwitcher">
+            <img src="../static/img/moon.png" alt="Theme Switcher" />
+          </button>
+          <hr class="upHr" />
+          <button class="languageButton" onclick="setLanguage('ru')">Ru</button>
+          <button class="languageButton" onclick="setLanguage('en')">En</button>
+        </div>
+      </div>
+    </header>
+    <hr />
+
+    <form method="POST" action="/">
+      <div class="formInfo">
+        <div class="container">
+          <div class="formGroup">
+            <fieldset>
+              <legend>{{ _('login_label') }} <span>*</span></legend>
+              <input
+                type="text"
+                id="login"
+                name="login"
+                required
+                placeholder="{{ _('example') }} ivan"
+              />
+            </fieldset>
+          </div>
+
+          <div class="formGroup passwordField">
+            <fieldset>
+              <legend>{{ _('password_label') }} <span>*</span></legend>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                placeholder="{{ _('example') }} 123"
+              />
+              <span class="togglePassword"
+                ><img
+                  src="{{ url_for('static', filename='img/eye.png') }}"
+                  alt="Toggle"
+              /></span>
+            </fieldset>
+          </div>
+          <div class="passwordRequirements">
+            <p>{{ _('password_requirements') }}</p>
+            <ul>
+              <li id="reqLength">
+                <span class="requirementIcon">✖</span> {{ _('req_length') }}
+              </li>
+              <li id="reqDigit">
+                <span class="requirementIcon">✖</span> {{ _('req_digit') }}
+              </li>
+              <li id="reqLetter">
+                <span class="requirementIcon">✖</span> {{ _('req_letter') }}
+              </li>
+              <li id="reqSpecial">
+                <span class="requirementIcon">✖</span> {{ _('req_special') }}
+              </li>
+              <li id="reqMatch">
+                <span class="requirementIcon">✖</span> {{ _('req_match') }}
+              </li>
+            </ul>
+          </div>
+
+          <div class="formGroup passwordField">
+            <fieldset>
+              <legend>{{ _('confirm_password_label') }} <span>*</span></legend>
+              <input
+                type="password"
+                id="confirm_password"
+                name="confirm_password"
+                required
+                placeholder="{{ _('repeat_password') }}"
+              />
+              <span class="togglePassword"
+                ><img
+                  src="{{ url_for('static', filename='img/eye.png') }}"
+                  alt="Toggle"
+              /></span>
+            </fieldset>
+          </div>
+
+          <div class="formGroup">
+            <fieldset>
+              <legend>{{ _('full_name_label') }} <span>*</span></legend>
+              <input
+                type="text"
+                id="full_name"
+                name="full_name"
+                required
+                placeholder="{{ _('example') }} {{ _('full_name_label') }}"
+              />
+            </fieldset>
+          </div>
+
+          <div class="formGroup">
+            <fieldset>
+              <legend>{{ _('email_label') }} <span>*</span></legend>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="{{ _('example') }} ivan@gmail.com"
+              />
+            </fieldset>
+          </div>
+
+          <div class="formGroup">
+            <fieldset>
+              <legend>{{ _('phone_label') }} <span>*</span></legend>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                placeholder="{{ _('example') }} +7 (***) ***-**-**"
+              />
+            </fieldset>
+          </div>
+
+          <div class="formGroup">
+            <fieldset>
+              <legend>{{ _('about_label') }} <span>*</span></legend>
+              <textarea
+                id="about"
+                name="about"
+                required
+                placeholder="{{ _('example') }} {{ _('about_label') }}"
+              ></textarea>
+            </fieldset>
+          </div>
+
+          <div class="formGroup">
+            <fieldset>
+              <legend>{{ _('avatar_label') }} *</legend>
+              <div id="dropZone" class="dropZone">
+                <p>{{ _('drag_drop') }}</p>
+                <input
+                  type="file"
+                  id="avatar"
+                  accept="image/*"
+                  style="display: none"
+                  required
+                />
+              </div>
+              <div class="avatarPreviewContainer">
+                <img
+                  id="avatarPreview"
+                  class="avatarPreview"
+                  style="display: none"
+                  alt="Avatar Preview"
+                />
+              </div>
+            </fieldset>
+          </div>
+
+          <button type="submit" id="submitButton">
+            {{ _('submit_button') }}
+          </button>
+          <div class="formGroup">
+            <p>
+              {{ _('required_field') }} <span>*</span> {{ _('for_filling') }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <section class="info">
+      <div class="containerPage">
+        <div class="infoList">
+          <h3>{{ _('info_title') }}</h3>
+          {% if users %} {% for user in users %}
+          <div class="userСard">
+            <p><strong>{{ _('login_label') }}:</strong> {{ user[1] }}</p>
+            <p><strong>{{ _('full_name_label') }}:</strong> {{ user[2] }}</p>
+            <p><strong>{{ _('email_label') }}:</strong> {{ user[3] }}</p>
+            <p><strong>{{ _('phone_label') }}:</strong> {{ user[4] }}</p>
+            <p><strong>{{ _('about_label') }}:</strong> {{ user[5] }}</p>
+            <p><strong>{{ _('avatar_label') }}:</strong></p>
+            <img
+              src="{{ url_for('avatar', user_id=user[0]) }}"
+              alt="User Avatar"
+            />
+          </div>
+          {% endfor %} {% else %}
+          <p>{{ _('no_info') }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script>
+      function setLanguage(lang) {
+        fetch(`/set_language/${lang}`).then(() => window.location.reload());
+      }
+    </script>
+  </body>
+</html>
